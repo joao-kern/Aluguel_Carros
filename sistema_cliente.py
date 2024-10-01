@@ -58,6 +58,7 @@ class Sistema_Cliente:
                             break
                         else:
                             aluguel = self.banco_de_dados.adicionar_alugueis(data_inicio, data_termino, self.cliente, veiculo)
+                            aluguel.veiculo.alterar_status('Alugado')
                             print('Aluguel realizado com sucesso!')
                             print(f'Valor Total: R$ {aluguel.valor_aluguel()}') 
                             print(' ')
@@ -72,29 +73,32 @@ class Sistema_Cliente:
             print('Não tem veículo com essa placa.')
         else:
             disponibilidade = self.banco_de_dados.verifica_status_veiculo(veiculo)
-            if disponibilidade == False:
+            if disponibilidade == True:
                     print('O veículo não está alugado.')
             else:
-                data_devolucao = input('Digite a data de devolução (formato: ano-mês-dia ): ')
-                data_devolucao = date.fromisoformat(data_devolucao)
-                while True:
-                    danos = input('Digite se houve danos ao carro (S/N): ').strip().upper()
-                    if danos == 'S' or danos == 'N':
-                        aluguel = self.banco_de_dados.buscar_aluguel(self.cliente, veiculo)
-                        multa = self.devolucao(aluguel, data_devolucao, danos)
-                        if multa != 0 and multa != None:
-                            print(f'Houve uma multa de: R$ {multa:.2f}')
-                            print('Devolução realizada com sucesso!')
-                            break
-                        elif multa == None:
-                            print('*Data de devolução impossível*\n(Menor que a data de início)')
-                            print()
-                            break
-                        else:
-                            print('Não houve multa')
-                            print('Devolução realizada com sucesso!')
-                            break
-                        print()
+                aluguel = self.banco_de_dados.buscar_aluguel(self.cliente, veiculo)
+                if aluguel == None:
+                    print('Não há aluguel desse veículo na sua conta.')
+                else:
+                    data_devolucao = input('Digite a data de devolução (formato: ano-mês-dia ): ')
+                    data_devolucao = date.fromisoformat(data_devolucao)
+                    while True:
+                        danos = input('Digite se houve danos ao carro (S/N): ').strip().upper()
+                        if danos == 'S' or danos == 'N':
+                            multa = self.devolucao(aluguel, data_devolucao, danos)
+                            if multa != 0 and multa != None:
+                                print(f'Houve uma multa de: R$ {multa:.2f}')
+                                print('Devolução realizada com sucesso!')
+                                break
+                            elif multa == None:
+                                print('*Data de devolução impossível*\n(Menor que a data de início)')
+                                print()
+                                break
+                            else:
+                                print('Não houve multa')
+                                print('Devolução realizada com sucesso!')
+                                break
+                    print()
 
     def meus_alugueis(self):
         print('Meus Alugueis')
@@ -105,7 +109,7 @@ class Sistema_Cliente:
 
     def finalzar_sessao(self):
         print()
-        print('Programa Encerrado.')
+        print('Sessão Finalizada.')
         self.sessao = False
     
     def verifica_op(self, op):
@@ -121,7 +125,7 @@ class Sistema_Cliente:
             return None
         quilometragem_andada = float(input('Digite a quilometragem andada durante o aluguel em KM: '))
         aluguel.veiculo.alterar_quilometragem(quilometragem_andada)
-        aluguel.confirmar_devolucao()
+        aluguel.confirmar_devolucao(data_devolucao)
         multa = aluguel.verifica_multa(data_devolucao, danos)
         self.banco_de_dados.alterar_renda_diaria(multa)
 
@@ -138,4 +142,3 @@ class Sistema_Cliente:
             print(f'Veículo {i + 1}:')
             veiculo.print_veiculo()
             print()
-    

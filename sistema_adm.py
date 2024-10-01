@@ -54,7 +54,7 @@ class Sitema_Adm:
         modelo = input('Digite o modelo do veículo: ').title().strip()
         ano = int(input('Digite o ano do carro: '))
         valor_diaria = float(input('Digite o valor da diária: R$ '))
-        self.banco_de_dados.adicionar_veiculo(placa, marca, modelo, ano, valor_diaria)
+        self.banco_de_dados.adicionar_veiculos(placa, marca, modelo, ano, valor_diaria)
         print('Veículo Cadastrado com sucesso!')
         print()
 
@@ -77,7 +77,10 @@ class Sitema_Adm:
         print()
         placa = input('Digite a placa do veículo: ').upper().strip()
         veiculo = self.banco_de_dados.buscar_veiculo(placa)
-        veiculo.print_veiculo()
+        if veiculo == None:
+            print('Não existe veículo com essa placa')
+        else:
+            veiculo.print_veiculo()
 
     def pesquisar_aluguel(self):
         print('Pesquisar Aluguel')
@@ -127,12 +130,13 @@ class Sitema_Adm:
 
     def finalizar_sessao(self):
         print()
-        print('Programa Encerrado.')
+        print('Sessão finalizada.')
         self.sessao = False
 
     def print_alugueis(self, alugueis):
         for i, aluguel in enumerate(alugueis):
             print(f'Aluguel {i + 1}:')
+            print(f'CPF: {aluguel.cliente.cpf}')
             aluguel.print_aluguel()
             print()
 

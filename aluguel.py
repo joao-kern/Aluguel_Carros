@@ -2,6 +2,7 @@ class Aluguel:
     def __init__(self, data_inicio, data_termino, cliente, veiculo):
         self.data_inicio = data_inicio
         self.data_termino = data_termino
+        self.data_devolucao = "Pendente"
         self.devolucao_realizada = 'Não'
         self.cliente = cliente
         self.veiculo = veiculo
@@ -23,8 +24,8 @@ class Aluguel:
         
         return self.multa
 
-    def confirmar_devolucao(self):
-        self.devolucao_realizada = 'Sim'
+    def confirmar_devolucao(self, data_devolucao):
+        self.devolucao_realizada = data_devolucao
 
     def valor_aluguel(self):
         dias = (self.data_termino - self.data_inicio).days

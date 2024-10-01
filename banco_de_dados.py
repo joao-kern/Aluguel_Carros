@@ -17,7 +17,7 @@ class BancoDados:
         self._clientes.append(cliente)
 
     def buscar_cliente(self, cpf):
-        for cliente in self._list_clientes:
+        for cliente in self._clientes:
             if cliente.cpf == cpf:
                 return cliente
     
@@ -68,8 +68,9 @@ class BancoDados:
         for alugueis in self._alugueis:
             if alugueis.cliente == cliente and alugueis.veiculo == veiculo:
                 aluguel = alugueis
+                return aluguel
 
-        return aluguel
+        return None
 
     def buscar_alugueis_cliente(self, cliente):
         alugueis_cliente = []
@@ -78,7 +79,7 @@ class BancoDados:
                 alugueis_cliente.append(alugueis)
 
         return alugueis_cliente
-    
+
     def receita(self):
         return self._renda_dia
 
