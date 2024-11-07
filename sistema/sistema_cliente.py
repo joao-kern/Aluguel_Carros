@@ -1,10 +1,13 @@
 from datetime import date
 
+from sistema.repositorios.banco_de_dados import BancoDados
+from sistema.modelos.cliente import Cliente
+
 class Sistema_Cliente:
-    def __init__(self, banco_de_dados, cliente):
+    def __init__(self, banco_de_dados: BancoDados, cliente: Cliente):
         self.banco_de_dados = banco_de_dados
         self.cliente = cliente
-        self.sessao = False
+        self.sessao: bool = False
 
 
     def executar(self):

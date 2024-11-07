@@ -1,11 +1,13 @@
-from sistema_adm import Sitema_Adm
-from sistema_cliente import Sistema_Cliente
+from sistema.modelos.administrador import Adm
+from sistema.repositorios.banco_de_dados import BancoDados
+from sistema.sistema_adm import Sitema_Adm
+from sistema.sistema_cliente import Sistema_Cliente
 
 class Sistema:
-    def __init__(self, banco_de_dados, adm):
+    def __init__(self, banco_de_dados: BancoDados, adm: Adm):
         self.banco_de_dados = banco_de_dados
         self.adm = adm
-        self.execucao = False
+        self.execucao: bool = False
 
     def executar(self):
         self.execucao = True

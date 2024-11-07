@@ -1,7 +1,10 @@
+from sistema.repositorios.banco_de_dados import BancoDados
+
+
 class Sitema_Adm:
-    def __init__(self, banco_de_dados):
+    def __init__(self, banco_de_dados: BancoDados):
         self.banco_de_dados = banco_de_dados
-        self.sessao = False
+        self.sessao: bool = False
              
     def executar(self):
         self.sessao = True
