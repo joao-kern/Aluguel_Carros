@@ -1,12 +1,12 @@
 class Veiculo:
-    def __init__(self, placa, marca, modelo, ano, valor_diaria):
+    def __init__(self, placa: str, marca: str, modelo: str, ano: int, valor_diaria: float):
         self.placa = placa
         self.marca = marca
         self.modelo = modelo
         self.ano = ano
-        self.status = 'Disponível'
-        self.valor_diaria =valor_diaria
-        self._quilometragem = 0
+        self.valor_diaria = valor_diaria
+        self.status: str = 'Disponível'
+        self._quilometragem: float = 0
 
     def alterar_status(self, status):
         self.status = status

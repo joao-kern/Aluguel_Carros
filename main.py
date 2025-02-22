@@ -1,6 +1,6 @@
-from banco_de_dados import BancoDados
-from sistema import Sistema
-from administrador import Adm
+from sistema.repositorios.banco_de_dados import BancoDados
+from sistema.sistema import Sistema
+from sistema.modelos.administrador import Adm
 
 def main():
     banco_de_dados = BancoDados()
